@@ -15,6 +15,7 @@ class UrlFilter(BloomFilter):
 
     def __init__(self, capacity=1000000, error_rate=0.01):
         super().__init__(capacity=capacity, error_rate=error_rate)
+        self.init()
 
     def init(self):
         with codecs.open(CRAWLED_STORE_FILE_PATH, 'r') as file:

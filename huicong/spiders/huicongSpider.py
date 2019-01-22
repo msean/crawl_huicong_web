@@ -66,11 +66,11 @@ class HuicongSpider(Spider):
 
             follow_urls = sel.xpath('//div[@class="s-mod-page"]//a/@href')
             for url in follow_urls[:]:
-                yield Request(url = url, callback=self.parse)
-
-        companies = sel.css('a[data-exposurelog]')
+                yield Request(url=url, callback=self.parse)
 
         extract_data_handler = lambda data_list: data_list[0].strip() if data_list else ""
+
+        companies = sel.css('a[data-exposurelog]')
         for company in companies[:1]:
             company_name = extract_data_handler(company.xpath('./@title').extract())
             company_url = extract_data_handler(company.xpath('./@href').extract())
@@ -82,7 +82,7 @@ class HuicongSpider(Spider):
         item = HuicongItem()
         soup = BeautifulSoup(response.body)
         detail_info = soup.select('div[class^="rBox3"] div[class^="tableCon"]')
-        if len(detail_info)!= 0:
+        if len(detail_info) != 0:
             item["companyName"] = response.meta["company_name"]
             item["companyUrl"] = response.url
             self.get_company_info(detail_info, item)
